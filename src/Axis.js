@@ -62,7 +62,7 @@ class AxisStruct {
     const fixed = this.options.zeroAxis?this.scale(0):horizontal?yAxis.min:xAxis.min
     const start = {x: horizontal?xAxis.min:fixed, y: horizontal?fixed:yAxis.min}
     const end = {x:horizontal?xAxis.max:fixed,y: horizontal?fixed:yAxis.max}
-    const tailLength = this.options.tailLength || 10
+    const tailLength = this.options.tailLength || 0
 
     const margin = this.margin
     if (margin !== undefined){
