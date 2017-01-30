@@ -116,11 +116,16 @@ export default class Axis extends Component {
     const ticks =_.map(axis.ticks, function (c, i) {
       const label = options.labelComponent !== undefined? React.cloneElement(options.labelComponent,{value:c}) : c
       let gxy = horizontal ? [scale(c),chartArea.y.min]:[chartArea.x.min,scale(c)]
-
+      // set up date
+      let date = " "
+      if (options.isDate) {
+        let arr = (new Date(label)).toDateString().split(" ")
+        date = arr[1] + " " + arr[3]
+      }
       let returnValue = <G key={i} x={gxy[0]} y={gxy[1]}>
 
                 {options.showTicks &&
-                  <Circle r="2" cx="0" cy="0" stroke="grey" fill="grey" />
+                  <Circle r="2" cx="0" cy="0" stroke="black" fill="black" />
                 }
 
                 {options.showLabels &&
@@ -131,7 +136,7 @@ export default class Axis extends Component {
                         fontStyle={textStyle.fontStyle}
                         fill={textStyle.fill}
                         textAnchor={textAnchor}>
-                        {label.toString()}
+                        {options.isDate ? date : Number(label.toPrecision(3)).toLocaleString()}
                   </Text>}
             </G>
 
@@ -154,7 +159,7 @@ export default class Axis extends Component {
 
     let returnV = <G>
               <G x={offset.x} y={offset.y}>
-                {options.showAxis ? <Path d={axis.path.print()} strokeOpacity={0.5} stroke="#3E90F0" strokeWidth={3} fill="none"/> : null}
+                {options.showAxis ? <Path d={axis.path.print()} strokeOpacity={1} stroke="#000000" strokeWidth={1} fill="none"/> : null}
               </G>
               {ticks}
               <G x={offset.x} y={offset.y}>
